@@ -27,8 +27,10 @@ try:
     # Drawing on the image
     logging.info("1.Drawing on the image...")
     image = Image.new('1', (640, 384), 255)  # 255: clear the frame
+    image_r = Image.new('1', (640, 384), 255)  # 255: clear the frame
     
     draw = ImageDraw.Draw(image)
+    draw_r = ImageDraw.Draw(image_r)
     font = ImageFont.truetype('Font.ttc', 24)
     font18 = ImageFont.truetype('Font.ttc', 18)
     font16 = ImageFont.truetype('Font.ttc', 16)
@@ -39,7 +41,6 @@ try:
     draw.text((80, 0), '預約列表', font = font, fill = 0)
 
     #BODY
-    draw.text((55,60), "⏰", font=fontEmoji, fill= 0)
     draw.text((4, 150), '今日沒有任何預約', font = font, fill = 0)
     # data = [
     #     {"time": 10, "hour": 1, "title": "鄭○文"},
@@ -70,7 +71,10 @@ try:
     # draw.text((2, 88), '15:00~16:00', font = font16, fill = 255)
     # draw.text((100, 84), '鄭○○', font = font, fill = 0)
 
-    client.publish('eink/image2', bytearray(convert_to_bytearray(image, 640, 384)), qos=2)
+    draw_r.text((55,60), "⏰", font=fontEmoji, fill= 0)
+
+    client.publish('eink/image2/black', bytearray(convert_to_bytearray(image, 640, 384)), qos=2)
+    client.publish('eink/image2/red', bytearray(convert_to_bytearray(image_r, 640, 384)), qos=2)
     time.sleep(2)
         
 except IOError as e:
