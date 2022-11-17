@@ -71,10 +71,14 @@ try:
     # draw.text((2, 88), '15:00~16:00', font = font16, fill = 255)
     # draw.text((100, 84), '鄭○○', font = font, fill = 0)
 
+    draw.text((55,60), "⏰", font=fontEmoji, fill= 0)
     draw_r.text((55,60), "⏰", font=fontEmoji, fill= 0)
 
     client.publish('eink/image2/black', bytearray(convert_to_bytearray(image, 640, 384)), qos=2)
-    client.publish('eink/image2/red', bytearray(convert_to_bytearray(image_r, 640, 384)), qos=2)
+
+    # client.publish('eink/image2/red', bytearray(convert_to_bytearray(image_r, 640, 384)), qos=2)
+    client.publish('eink/image2/red', "BLANK", qos=2)
+
     time.sleep(2)
         
 except IOError as e:
